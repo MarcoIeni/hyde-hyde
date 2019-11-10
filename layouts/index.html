@@ -4,8 +4,9 @@
 
 {{ define "content" }}
   <div class="post-list">
-    {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" site.Params.mainSections) }}
-    {{ range $paginator.Pages }}
+      {{ $no_portfolio:= (where .Site.RegularPages "Type" "<>" "portfolio") }}
+      {{ $posts:= .Paginate (where $no_portfolio "Title" "<>" "About") }}
+      {{ range $posts.Pages }}
       {{ if .Draft }}
         {{ .Scratch.Set "draftPage" true }}
       {{ else }}
